@@ -1,0 +1,15 @@
+### What is Heart Disease?
+Heart disease refers to various types of heart conditions, including coronary artery disease, arrhythmias, and congenital heart defects. The most common type is coronary artery disease, which can lead to heart attacks.
+
+### Key Inputs for Prediction:
+- **Cholesterol Level**: High cholesterol can clog arteries, increasing the risk of heart disease.
+- **Blood Pressure**: Hypertension is a major risk factor for heart attacks and strokes.
+- **Age**: Age is a critical factor as older individuals are more likely to develop heart disease.
+- **Chest Pain History**: Pain in the chest can indicate an underlying heart issue.
+
+### Facts About Heart Disease:
+- **Fact 1**: **Cardiovascular diseases** are the leading cause of death globally, claiming an estimated **17.9 million lives** each year.
+- **Fact 2**: **80% of premature heart attacks and strokes** are preventable through healthy diet, regular physical activity, and avoiding tobacco use.
+- **Fact 3**: Having high blood pressure doubles the risk of developing heart disease.
+
+---

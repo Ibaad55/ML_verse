@@ -1,0 +1,35 @@
+"This is a predictive model; a doctor's opinion holds significantly more power. It is essential to consult healthcare professionals for a thorough assessment and diagnosis."
+---
+---
+## User Inputs for Diabetes Prediction
+To make predictions regarding diabetes, we require the following inputs from the user:
+
+1. **Glucose Level**: 
+   - The blood glucose level of the individual, measured in mg/dL.
+   - High levels may indicate diabetes.
+2. **Blood Pressure**:
+   - The systolic and diastolic blood pressure values, measured in mmHg.
+   - Hypertension can increase the risk of diabetes.
+
+3. **Skin Thickness**: 
+   - The thickness of the skin at the tricep, measured in mm.
+   - This measurement can indicate insulin resistance.
+
+4. **Insulin Level**: 
+   - The amount of insulin in the blood, measured in µU/mL.
+   - High insulin levels can suggest insulin resistance.
+
+5. **Body Mass Index (BMI)**: 
+   - A measure of body fat based on height and weight.
+   - A BMI over 25 is considered overweight, which increases diabetes risk.
+
+6. **Age**: 
+   - The age of the user in years.
+   - Risk of diabetes increases with age.
+
+7. **Diabetes Pedigree Function**: 
+   - A score that indicates the likelihood of diabetes based on family history.
+   - A higher score reflects a greater genetic predisposition.
+
+---
+---

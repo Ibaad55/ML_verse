@@ -1,0 +1,27 @@
+"This is a predictive model; a doctor's opinion holds significantly more power. It is essential to consult healthcare professionals for a thorough assessment and diagnosis."
+---
+---
+## User Inputs for Parkinson's Prediction
+To make predictions regarding diabetes, we require the following inputs from the user:
+
+***MDVP:Fo(Hz)*** - Average vocal fundamental frequency
+
+***MDVP:Fhi(Hz)*** - Maximum vocal fundamental frequency
+
+***MDVP:Flo(Hz)*** - Minimum vocal fundamental frequency
+
+***MDVP:Jitter(%) , MDVP:Jitter(Abs) , MDVP:RAP , MDVP:PPQ , Jitter:DDP*** - Several measures of variation in fundamental frequency
+
+***MDVP:Shimmer , MDVP:Shimmer(dB) , Shimmer:APQ3 , Shimmer:APQ5 , MDVP:APQ , Shimmer:DDA*** - Several measures of variation in amplitude
+
+***NHR , HNR*** - Two measures of ratio of noise to tonal components in the voice
+
+***RPDE , D2*** - Two nonlinear dynamical complexity measures
+
+***DFA*** - Signal fractal scaling exponent
+
+***spread1 , spread2 , PPEMDVP:Fo(Hz)*** - Average vocal fundamental frequency
+
+
+---
+---

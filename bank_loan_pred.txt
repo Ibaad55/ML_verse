@@ -1,0 +1,15 @@
+- **Account Number**: Unique identifier for the loan applicant's bank account
+- **Full Name**: Complete legal name of the loan applicant
+- **Gender**: Applicant's gender (Female or Male)
+- **Marital Status**: Whether applicant is married (Yes or No)
+- **Dependents**: Number of financial dependents (None, One, Two, More than Two)
+- **Education**: Applicant's educational qualification (Graduate or Not Graduate)
+- **Employment Status**: Type of employment (Job or Business)
+- **Property Area**: Geographic classification of residence (Rural, Semi-Urban, Urban)
+- **Credit Score**: Range of applicant's credit score (300-500 or Above 500)
+- **Applicant's Monthly Income**: Monthly earnings of the primary applicant
+- **Co-Applicant's Monthly Income**: Monthly earnings of the co-applicant
+- **Loan Amount**: Total amount of loan requested
+- **Loan Duration**: Proposed length of loan repayment (2, 6, 8 months, 1 year, 16 months)
+---
+---

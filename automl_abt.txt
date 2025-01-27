@@ -1,0 +1,26 @@
+---
+---
+**AutoML with Lazypredict: Automated Model Selection**
+
+Key Features:
+- Automatically trains multiple machine learning models
+- Evaluates model performance across various algorithms
+- Supports classification and regression tasks
+- Provides quick comparative model insights
+- Reduces manual model selection effort
+
+Supported Algorithms Include:
+- Linear models
+- Decision trees
+- Random forests
+- Gradient boosting models
+- Support vector machines
+- Neural network variants
+
+Core Benefits:
+- Rapid model prototyping
+- Performance benchmarking
+- Simplified machine learning workflow
+- Identifies best-performing models automatically
+---
+---

@@ -1,0 +1,26 @@
+**CSV File Input for Comprehensive Data Analysis**
+
+Input: Single CSV file containing structured tabular data
+
+Analysis Features:
+- Statistical summary of all columns
+- Data cleaning and preprocessing
+- Missing value detection and handling
+- Correlation matrix visualization
+- Distribution plots for numerical features
+- Categorical variable frequency analysis
+- Outlier detection
+- Dimensionality reduction techniques
+- Interactive visualizations
+- Descriptive statistical insights
+
+Key Visualization Types:
+- Histograms
+- Box plots
+- Scatter plots
+- Heatmaps
+- Pair plots
+- Bar charts
+
+Goal: Transform raw data into actionable insights through comprehensive visual and statistical exploration
+---

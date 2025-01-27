@@ -1,0 +1,14 @@
+### What is Parkinsons Disease?
+Parkinsonss disease is a progressive neurological disorder that affects movement. It develops gradually, sometimes starting with a barely noticeable tremor in just one hand. The disease often causes stiffness or slowing of movement.
+
+### Key Inputs for Prediction:
+- **Tremor Frequency**: Early signs of Parkinsons include a tremor in the hands or fingers.
+- **Muscle Stiffness**: Rigidity and stiffness can indicate the onset of Parkinsons.
+- **Movement Slowness (Bradykinesia)**: Slowness in voluntary movements is another critical sign.
+
+### Facts About Parkinsons Disease:
+- **Fact 1**: **10 million people** worldwide are living with Parkinsons disease.
+- **Fact 2**: While there is no cure for Parkinsons, **medications and therapy** can help control symptoms.
+- **Fact 3**: Men are **1.5 times** more likely to develop Parkinsons disease than women.
+
+---

@@ -1,0 +1,18 @@
+**PCA Transformation in Fraud Detection**
+
+The input data represents features transformed using Principal Component Analysis (PCA), a dimensionality reduction technique crucial for:
+
+- Anonymizing sensitive transaction details
+- Reducing computational complexity
+- Extracting most significant transaction characteristics
+- Mitigating potential bias and overfitting
+- Enabling more efficient machine learning modeling
+
+Key inputs include:
+- Original transaction time
+- 28 PCA-transformed features (V1-V28)
+- Transaction amount
+
+PCA converts original features into uncorrelated principal components, capturing maximum variance with minimal information loss.
+---
+---

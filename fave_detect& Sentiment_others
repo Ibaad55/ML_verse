@@ -1,0 +1,351 @@
+face Detection code:
+import streamlit as st
+from PIL import Image, UnidentifiedImageError
+import cv2
+import numpy as np
+import base64
+from io import BytesIO
+from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
+
+# Load Haar Cascade
+faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+
+# Generate download link
+def get_image_download_link(img, filename, text):
+    buffered = BytesIO()
+    img.save(buffered, format="JPEG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    href = f'<a href="data:file/jpg;base64,{img_str}" download="{filename}">{text}</a>'
+    return href
+
+
+# Face detection function
+def face_detect(image, sf, mn):
+    i = 0
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    faces = faceCascade.detectMultiScale(gray, sf, mn)
+    for (x, y, w, h) in faces:
+        i += 1
+        cv2.rectangle(image, (x, y), (x + w, y + h), (237, 30, 72), 3)
+        cv2.rectangle(image, (x, y - 40), (x + w, y), (237, 30, 72), -1)
+        cv2.putText(image, f'F-{i}', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2)
+    resi_image = cv2.resize(image, (350, 350))
+    return resi_image, i, image
+
+
+# Video processing class
+class VideoTransformer(VideoTransformerBase):
+    def __init__(self):
+        self.i = 0
+
+    def transform(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = faceCascade.detectMultiScale(gray, 1.3, 5)
+        self.i += 1
+        for (x, y, w, h) in faces:
+            cv2.rectangle(img, (x, y), (x + w, y + h), (95, 207, 30), 3)
+            cv2.rectangle(img, (x, y - 40), (x + w, y), (95, 207, 30), -1)
+            cv2.putText(img, f'F-{self.i}', (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 0), 2)
+        return img
+
+
+# Main app function
+def run():
+    st.title("Face Detection using OpenCV")
+    activities = ["Image", "Webcam"]
+    st.sidebar.markdown("# Choose Input Source")
+    choice = st.sidebar.selectbox("Choose among the given options:", activities)
+    link = '[©Developed by Spidy20](http://github.com/spidy20)'
+    st.sidebar.markdown(link, unsafe_allow_html=True)
+
+    if choice == 'Image':
+        st.markdown(
+            '''<h4 style='text-align: left; color: #d73b5c;'>* Face Detection is done using Haar Cascade & OpenCV"</h4>''',
+            unsafe_allow_html=True)
+        img_file = st.file_uploader("Choose an Image", type=['jpg', 'jpeg', 'jfif', 'png'])
+
+        if img_file is not None:
+            try:
+                # Load the uploaded image
+                img = Image.open(img_file)
+                img = np.array(img)  # Convert to NumPy array for OpenCV
+                img1 = cv2.resize(img, (350, 350))
+                place_h = st.columns(2)
+                place_h[0].image(img1, caption="Uploaded Image")
+
+                st.markdown(
+                    '''<h4 style='text-align: left; color: #d73b5c;'>* Increase & Decrease it to get better accuracy.</h4>''',
+                    unsafe_allow_html=True)
+                scale_factor = st.slider("Set Scale Factor Value", min_value=1.1, max_value=1.9, step=0.10, value=1.3)
+                min_Neighbors = st.slider("Set Min Neighbors", min_value=1, max_value=9, step=1, value=5)
+
+                fd, count, original_image = face_detect(img, scale_factor, min_Neighbors)
+                place_h[1].image(fd, caption="Processed Image with Faces")
+                if count == 0:
+                    st.error("No faces found!")
+                else:
+                    st.success(f"Total number of faces detected: {count}")
+                    result = Image.fromarray(original_image)
+                    st.markdown(get_image_download_link(result, img_file.name, 'Download Image'),
+                                unsafe_allow_html=True)
+
+            except UnidentifiedImageError:
+                st.error("Cannot identify the uploaded image file. Please upload a valid image.")
+
+    elif choice == 'Webcam':
+        st.markdown(
+            '''<h4 style='text-align: left; color: #d73b5c;'>* Webcam functionality might not work on mobile browsers.</h4>''',
+            unsafe_allow_html=True)
+        webrtc_streamer(key="example", video_transformer_factory=VideoTransformer)
+
+
+run()
+
+
+
+#                           SENTIMENT ANALYSIS code:
+import streamlit as st
+import torch
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from scipy.special import softmax
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Load the sentiment analysis model
+roberta = "cardiffnlp/twitter-roberta-base-sentiment"
+model2 = AutoModelForSequenceClassification.from_pretrained(roberta)
+tokenizer = AutoTokenizer.from_pretrained(roberta)
+labels = ['Negative 😞', 'Neutral 😐', 'Positive 😀']
+
+st.title("A STUDY ON SENTIMENTAL ANALYSIS OF MENTAL ILLNESS, CONNOTATIONS OF TEXTS")
+
+# Input area
+st.header("Input your tweets here (comma-separated):")
+user_input = st.text_area("Enter tweets:")
+
+# Analyze sentiment
+if st.button("Predict Sentiment"):
+    tweets = user_input.split(',')
+
+    # Lists to store sentiment scores
+    negative_scores = []
+    neutral_scores = []
+    positive_scores = []
+
+    for i, tweet in enumerate(tweets, start=1):
+        # Preprocess tweet
+        tweet = tweet.strip()  # Remove leading/trailing spaces
+        tweet_words = []
+
+        for word in tweet.split(' '):
+            if word.startswith('@') and len(word) > 1:
+                word = '@user'
+            elif word.startswith('http'):
+                word = "http"
+            tweet_words.append(word)
+
+        tweet_proc = " ".join(tweet_words)
+
+        # Sentiment analysis
+        encoded_tweet = tokenizer(tweet_proc, return_tensors='pt')
+        output = model2(**encoded_tweet)
+
+        scores = output.logits[0].detach().numpy()
+        scores = softmax(scores)
+
+        negative_scores.append(scores[0])
+        neutral_scores.append(scores[1])
+        positive_scores.append(scores[2])
+
+    # Display sentiment scores and create a bar chart
+    st.subheader("Sentiment Analysis Results:")
+    for i, tweet in enumerate(tweets, start=1):
+        st.write(f"**Tweet {i}:** '{tweet}'")
+        st.write("Sentiment Scores:")
+        st.write(f"- Negative 😞: {negative_scores[i-1]:.5f}")
+        st.write(f"- Neutral 😐: {neutral_scores[i-1]:.5f}")
+        st.write(f"- Positive 😀: {positive_scores[i-1]:.5f}")
+
+    # Create a bar chart for sentiment scores
+    fig, ax = plt.subplots(figsize=(10, 6))
+    fig.patch.set_facecolor('yellow')
+    x = np.arange(len(tweets))
+    colors = ['red', 'gray', 'green']
+    bar_width = 0.2
+
+    ax.bar(x, negative_scores, width=bar_width, label='Negative 😞', color=colors[0])
+    ax.bar(x + bar_width, neutral_scores, width=bar_width, label='Neutral 😐', color=colors[1])
+    ax.bar(x + 2 * bar_width, positive_scores, width=bar_width, label='Positive 😀', color=colors[2])
+
+    ax.set_xlabel('Tweets')
+    ax.set_ylabel('Sentiment Scores')
+    ax.set_title('Sentiment Analysis Results')
+    ax.set_xticks(x + bar_width)
+    ax.set_xticklabels(tweets, rotation=46, ha="right")
+    ax.legend()
+
+    # Display the bar chart using st.pyplot()
+    st.pyplot(fig)
+
+# Add a clear button to reset the input and results
+if st.button("Clear"):
+    user_input = ""  # Clear user input
+    tweets = []  # Clear stored tweets
+    negative_scores = []  # Clear sentiment scores
+    neutral_scores = []
+    positive_scores = []
+
+# Display the code
+
+# Print the code
+
+
+
+#            EDA            MODEL
+import numpy as np
+import pandas as pd
+import streamlit as st
+from ydata_profiling import ProfileReport
+from streamlit_pandas_profiling import st_profile_report
+
+# Title and Description
+st.markdown("<h1 style='text-align: center; color : #FF7074; text-decoration: underline;'>The EDA App</h1>",
+            unsafe_allow_html=True)
+st.markdown(
+    "<h2 style='text-align: center; color: #FFFFFF;'>This is the Exploratory Data Analysis App created using the pandas-profiling library.</h2>",
+    unsafe_allow_html=True)
+
+st.write(
+    "Upload a CSV file to generate an **Exploratory Data Analysis (EDA)** report using the **pandas-profiling** library.")
+
+# File Upload Section
+st.header("1. Upload Your CSV Data")
+uploaded_file = st.file_uploader("Upload your input CSV file", type=["csv"])
+
+# Example File Link
+st.markdown(
+    "[Example CSV input file](https://raw.githubusercontent.com/dataprofessor/data/master/delaney_solubility_with_descriptors.csv)")
+
+# Process Uploaded File
+if uploaded_file is not None:
+    # Read the file directly without caching
+    df = pd.read_csv(uploaded_file)
+    st.session_state['uploaded_file'] = uploaded_file.name  # Store the file name in session state
+
+    # Generate Pandas Profiling Report
+    pr = ProfileReport(df, explorative=True)
+    st.header("**Input DataFrame**")
+    st.write(df)
+    st.write("---")
+    st.header("**Pandas Profiling Report**")
+    st_profile_report(pr)
+
+# Example Dataset
+else:
+    st.info("Awaiting a CSV file to be uploaded.")
+    if st.button("Press to Use Example Dataset"):
+        # Load Example Data
+        df = pd.DataFrame(
+            np.random.rand(100, 5),
+            columns=["a", "b", "c", "d", "e"]
+        )
+        pr = ProfileReport(df, explorative=True)
+        st.header("**Input DataFrame**")
+        st.write(df)
+        st.write("---")
+        st.header("**Pandas Profiling Report**")
+        st_profile_report(pr)
+
+
+
+
+#            MODEL            CUSTOMER     CHURN
+import streamlit as st
+import pickle
+import numpy as np
+
+# Load the trained model
+model_path = 'I:\\TEST_GODFATHER_PREDICTEOR\\Papa_prediction\\mdpss\\saved_models\\Customer_Churn_Prediction2.pkl'
+with open(model_path, 'rb') as file:
+    model = pickle.load(file)
+
+st.markdown("<h1 style='text-align: center; text-decoration: underline;color: #F4A300;'>Customer Churn Prediction</h1>",unsafe_allow_html=True)
+
+
+# User inputs organized in two columns
+st.header("Input Customer Data")
+
+col1, col2 = st.columns(2)
+
+# Inputs in the first column
+with col1:
+    CreditScore = st.number_input("Credit Score", min_value=300, max_value=850, step=1)
+    Age = st.number_input("Age", min_value=18, max_value=100, step=1)
+    Tenure = st.number_input("Tenure (Years)", min_value=0, max_value=10, step=1)
+    Balance = st.number_input("Balance", min_value=0.0, step=0.01, format="%.2f")
+    Geography = st.selectbox("Geography", ["Germany", "Spain", "France"])
+
+# Inputs in the second column
+with col2:
+    NumOfProducts = st.selectbox("Number of Products", [1, 2, 3, 4])
+    HasCrCard = st.radio("Has Credit Card?", ["Yes", "No"])
+    IsActiveMember = st.radio("Is Active Member?", ["Yes", "No"])
+    EstimatedSalary = st.number_input("Estimated Salary", min_value=0.0, step=0.01, format="%.2f")
+    Gender = st.radio("Gender", ["Male", "Female"])
+
+# Encoding categorical variables
+Geography_Germany = 1 if Geography == "Germany" else 0
+Geography_Spain = 1 if Geography == "Spain" else 0
+Geography_France = 1 if Geography == "France" else 0
+Gender_Male = 1 if Gender == "Male" else 0
+Gender_Female = 1 if Gender == "Female" else 0
+HasCrCard = 1 if HasCrCard == "Yes" else 0
+IsActiveMember = 1 if IsActiveMember == "Yes" else 0
+
+# Prepare the input features
+input_features = np.array([[
+    CreditScore, Age, Tenure, Balance, NumOfProducts, HasCrCard,
+    IsActiveMember, EstimatedSalary, Geography_Germany, Geography_Spain,
+    Gender_Male
+]])
+
+# Button for prediction
+if st.button("Predict Churn"):
+    prediction = model.predict(input_features)
+    if prediction[0] == 1:
+        st.markdown(
+            f"""
+<div style='
+text-align: center; border: 3px solid #6D28D9; border-radius: 15px; padding: 25px; background: linear-gradient(145deg, #4C1D95, #5B21B6); box-shadow: 0 12px 40px rgba(109, 40, 217, 0.3);
+font-family: "Peace Sans", Peace Sans;position: relative;overflow: hidden; transform: perspective(1000px);'><div style='
+position: absolute;top: -50%; left: -50%; width: 200%; height: 200%;
+background: radial-gradient(circle at center, rgba(109, 40, 217, 0.1) 0%, transparent 70%);
+opacity: 0.5; z-index: 1;'></div><div style='position: relative; z-index: 2;transform: rotateX(5deg);'>
+<h2 style='color: #E9D5FF; margin: 0; font-size: 34px; font-weight: 800;text-shadow: 3px 3px 6px rgba(0,0,0,0.3);letter-spacing: 3px;'>
+{"This Customer is Likely to Churn"}
+</h2><p style='color: #D8B4FE; font-size: 19px; margin-top: 15px;font-weight: 700;text-transform: uppercase;letter-spacing: 2px;'>
+Misinformation Detected
+</p></div></div>
+""",
+unsafe_allow_html=True
+        )
+
+    else:
+        st.markdown(
+            f"""
+        <div style='
+        text-align: center; border: 3px solid #6D28D9; border-radius: 15px; padding: 25px; background: linear-gradient(145deg, #4C1D95, #5B21B6); box-shadow: 0 12px 40px rgba(109, 40, 217, 0.3);
+        font-family: "Bold Addict", sans-serif; position: relative; overflow: hidden; transform: perspective(1000px);'><div style='
+        position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+        background: radial-gradient(circle at center, rgba(109, 40, 217, 0.1) 0%, transparent 70%);
+        opacity: 0.5; z-index: 1;'></div><div style='position: relative; z-index: 2; transform: rotateX(5deg);'>
+        <h2 style='color: #E9D5FF; margin: 0; font-size: 34px; font-weight: 800;text-shadow: 3px 3px 6px rgba(0,0,0,0.3); letter-spacing: 3px;'>
+        {"This Customer is NOT Likely to Churn"}
+        </h2></div></div>
+        """,
+            unsafe_allow_html=True
+        )
+
+

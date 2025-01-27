@@ -1,0 +1,14 @@
+- **longitude**: Geographic east-west position of the location
+- **latitude**: Geographic north-south position of the location
+- **age**: Age of the housing or property
+- **rooms**: Total number of rooms in the property
+- **median_income**: Median income of the area or household
+- **OCEAN**: Binary indicator if property is in an ocean-adjacent area
+- **INLAND**: Binary indicator if property is in an inland location
+- **ISLAND**: Binary indicator if property is on an island
+- **NEAR_BAY**: Binary indicator if property is near a bay
+- **NEAR_OCEAN**: Binary indicator if property is near an ocean
+- **bedroom_ratio**: Proportion of bedrooms to total rooms
+- **household_rooms**: Number of rooms in the household
+---
+---

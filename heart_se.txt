@@ -1,0 +1,60 @@
+"This is a predictive model; a doctor's opinion holds significantly more power. It is essential to consult healthcare professionals for a thorough assessment and diagnosis."
+---
+---
+## User Inputs for Heart Disease Prediction
+To make predictions regarding diabetes, we require the following inputs from the user:
+
+1. **Age:**
+   - The age of the individual in years.
+   - Risk of heart disease generally increases with age.
+
+2. **Sex:**
+   - The gender of the individual (male or female).
+   - Gender can influence heart disease risk factors.
+
+3. **Chest Pain Type:**
+   - Type of chest pain experienced (typical angina, atypical angina, non-anginal pain).
+   - Different types of chest pain can indicate varying levels of heart disease risk.
+
+4. **Resting Blood Pressure:**
+   - The systolic and diastolic blood pressure values, measured in mmHg.
+   - Hypertension is a significant risk factor for heart disease.
+
+5. **Serum Cholesterol:**
+   - Total cholesterol levels in mg/dL.
+   - High cholesterol levels can increase the risk of heart disease.
+
+6. **Fasting Blood Sugar:**
+   - Blood sugar levels measured in mg/dL.
+   - A fasting blood sugar level greater than 126 mg/dL may indicate diabetes.
+
+7. **Resting Electrocardiographic Results:**
+   - The results of an electrocardiogram at rest (normal, having ST-T wave abnormality, showing left ventricular hypertrophy).
+   - Abnormal results can indicate heart issues.
+
+8. **Maximum Heart Rate Achieved:**
+   - The maximum heart rate during exercise, measured in beats per minute.
+   - Low maximum heart rate may indicate poor cardiovascular health.
+
+9. **Exercise Induced Angina:**
+   - Whether exercise induces angina (yes or no).
+   - Exercise-induced angina may indicate underlying heart disease.
+
+10. **Oldpeak:**
+    - The ST depression induced by exercise relative to rest.
+    - Higher values may suggest heart problems.
+
+11. **Slope of Peak Exercise ST Segment:**
+    - The slope of the ST segment during peak exercise (upsloping, flat, or downsloping).
+    - The slope can provide insights into heart health.
+
+12. **Number of Major Vessels Colored by Fluoroscopy:**
+    - The number of major vessels (0-3) that are colored by fluoroscopy.
+    - More colored vessels indicate better heart health.
+
+13. **Thalassemia:**
+    - The result of the thalassemia test (normal, fixed defect, or reversible defect).
+    - Abnormal results can indicate heart disease.
+
+---
+---

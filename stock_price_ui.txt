@@ -1,0 +1,5 @@
+- **Stock Symbol**: Unique ticker representing a specific company's stock (e.g., GOOG for Google/Alphabet)
+- **Start Date**: Initial date for historical stock price and performance analysis
+- **End Date**: Final date for collecting and visualizing stock market data
+---
+---

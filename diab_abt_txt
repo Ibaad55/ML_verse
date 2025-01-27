@@ -1,0 +1,15 @@
+### What is Diabetes?
+Diabetes is a chronic condition that affects how your body processes blood sugar (glucose). Without careful management, diabetes can lead to serious health complications such as heart disease, nerve damage, kidney failure, and more.
+
+### Key Inputs for Prediction:
+- **Glucose Level**: A primary indicator of how well the body regulates blood sugar.
+- **BMI (Body Mass Index)**: An indicator of body fat, which is often correlated with the risk of developing diabetes.
+- **Age**: Older individuals tend to be at higher risk of developing type 2 diabetes.
+- **Insulin Levels**: Low insulin can indicate poor control of blood sugar levels.
+
+### Facts About Diabetes:
+- **Fact 1**: According to the World Health Organization, over **422 million people** globally have diabetes.
+- **Fact 2**: Type 2 diabetes accounts for **90-95% of all diabetes cases**.
+- **Fact 3**: With proper diet and exercise, type 2 diabetes is preventable in **80-90% of cases**.
+
+---

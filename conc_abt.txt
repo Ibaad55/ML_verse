@@ -1,0 +1,3 @@
+---
+**Conclusion:**
+This project aims to provide preliminary predictions to help individuals understand their risk of developing these conditions. **It’s essential to consult a healthcare provider for any health-related concerns or decisions**. Our predictive models are here to guide but should not substitute medical expertise.
